@@ -1,3 +1,20 @@
+export type BaseColorVariant =
+  | "contrast"
+  | "success"
+  | "danger"
+  | "warning"
+  | "info";
+export type ColorVariant = "white" | "light" | BaseColorVariant;
+export type ButtonColorVariant =
+  | "white"
+  | "whiteDark"
+  | "lightDark"
+  | BaseColorVariant;
+
+export type BaseColorDef = Record<BaseColorVariant, string | string[]>;
+export type ColorDef = Record<ColorVariant, string | string[]>;
+export type ButtonColorDef = Record<ButtonColorVariant, string | string[]>;
+
 export const gradientBgBase = "bg-gradient-to-tr";
 export const gradientBgPurplePink = `${gradientBgBase} from-purple-400 via-pink-500 to-red-500`;
 export const gradientBgDark = `${gradientBgBase} from-slate-700 via-slate-900 to-slate-800`;
@@ -11,7 +28,7 @@ export const colorsBgLight = {
   danger: "bg-red-500 border-red-500 text-white",
   warning: "bg-yellow-500 border-yellow-500 text-white",
   info: "bg-blue-500 border-blue-500 text-white",
-};
+} satisfies ColorDef;
 
 export const colorsText = {
   white: "text-black dark:text-slate-100",
@@ -21,7 +38,7 @@ export const colorsText = {
   danger: "text-red-500",
   warning: "text-yellow-500",
   info: "text-blue-500",
-};
+} satisfies ColorDef;
 
 export const colorsOutline = {
   white: [colorsText.white, "border-gray-100"],
@@ -31,12 +48,12 @@ export const colorsOutline = {
   danger: [colorsText.danger, "border-red-500"],
   warning: [colorsText.warning, "border-yellow-500"],
   info: [colorsText.info, "border-blue-500"],
-};
+} satisfies ColorDef;
 
 export const getButtonColor = (
-  color,
-  isOutlined,
-  hasHover,
+  color: ButtonColorVariant | BaseColorVariant,
+  isOutlined: boolean,
+  hasHover: boolean,
   isActive = false
 ) => {
   const colors = {
@@ -111,14 +128,19 @@ export const getButtonColor = (
         "hover:bg-yellow-600 hover:text-white hover:text-white hover:dark:text-white hover:dark:border-yellow-600",
       info: "hover:bg-blue-600 hover:text-white hover:dark:text-white hover:dark:border-blue-600",
     },
-  };
+  } satisfies Record<string, ButtonColorDef | BaseColorDef>;
 
   if (!colors.bg[color]) {
     return color;
   }
 
-  const isOutlinedProcessed =
-    isOutlined && ["white", "whiteDark", "lightDark"].indexOf(color) < 0;
+  function isBaseColorVariant(
+    color: ButtonColorVariant | BaseColorVariant
+  ): color is BaseColorVariant {
+    return !["white", "whiteDark", "lightDark"].includes(color);
+  }
+
+  const isOutlinedProcessed = isOutlined && isBaseColorVariant(color);
 
   const base = [colors.borders[color], colors.ring[color]];
 

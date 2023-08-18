@@ -12,10 +12,11 @@ import {
   mdiPalette,
   mdiReact,
 } from "@mdi/js";
+import type { MenuItem } from "@/types";
 
 export default [
   {
-    to: "/dashboard",
+    route: "dashboard",
     icon: mdiMonitor,
     label: "Dashboard",
   },
@@ -83,4 +84,4 @@ export default [
     icon: mdiReact,
     target: "_blank",
   },
-];
+] satisfies MenuItem[];

@@ -11,6 +11,7 @@ import {
   mdiGithub,
   mdiReact,
 } from "@mdi/js";
+import type { MenuItem } from "@/types";
 
 export default [
   {
@@ -86,4 +87,4 @@ export default [
     isDesktopNoLabel: true,
     isLogout: true,
   },
-];
+] satisfies MenuItem[];

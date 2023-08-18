@@ -2,8 +2,16 @@ import { defineStore } from "pinia";
 import * as styles from "@/styles";
 import { darkModeKey, styleKey } from "@/config";
 
+type AvailableStyle = keyof typeof styles;
+
+type State = {
+  [P in keyof styles.StyleDef as `${string & P}Style`]: styles.StyleDef[P];
+} & {
+  darkMode: boolean;
+};
+
 export const useStyleStore = defineStore("style", {
-  state: () => ({
+  state: (): State => ({
     /* Styles */
     asideStyle: "",
     asideScrollbarsStyle: "",
@@ -20,7 +28,7 @@ export const useStyleStore = defineStore("style", {
     darkMode: false,
   }),
   actions: {
-    setStyle(payload) {
+    setStyle(payload: AvailableStyle) {
       if (!styles[payload]) {
         return;
       }
@@ -31,12 +39,13 @@ export const useStyleStore = defineStore("style", {
 
       const style = styles[payload];
 
-      for (const key in style) {
+      let key: keyof styles.StyleDef;
+      for (key in style) {
         this[`${key}Style`] = style[key];
       }
     },
 
-    setDarkMode(payload = null) {
+    setDarkMode(payload: boolean | null = null) {
       this.darkMode = payload !== null ? payload : !this.darkMode;
 
       if (typeof localStorage !== "undefined") {

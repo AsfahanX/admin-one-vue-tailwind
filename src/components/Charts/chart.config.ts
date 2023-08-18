@@ -1,3 +1,7 @@
+import type { ChartDataset, ChartData } from "chart.js";
+
+export type ChartColorVariant = keyof typeof chartColors.default;
+
 export const chartColors = {
   default: {
     primary: "#00D1B2",
@@ -6,7 +10,7 @@ export const chartColors = {
   },
 };
 
-const randomChartData = (n) => {
+const randomChartData = (n: number): number[] => {
   const data = [];
 
   for (let i = 0; i < n; i++) {
@@ -16,7 +20,10 @@ const randomChartData = (n) => {
   return data;
 };
 
-const datasetObject = (color, points) => {
+const datasetObject = (
+  color: ChartColorVariant,
+  points: number
+): ChartDataset => {
   return {
     fill: false,
     borderColor: chartColors.default[color],
@@ -36,7 +43,7 @@ const datasetObject = (color, points) => {
   };
 };
 
-export const sampleChartData = (points = 9) => {
+export const sampleChartData = (points = 9): ChartData => {
   const labels = [];
 
   for (let i = 1; i <= points; i++) {

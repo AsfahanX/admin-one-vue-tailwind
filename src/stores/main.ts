@@ -1,8 +1,28 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import type { Client, History } from "@/types";
+
+type State = {
+  userName: UserPayload["name"];
+  userEmail: UserPayload["email"];
+  userAvatar: UserPayload["avatar"];
+
+  /* Field focus with ctrl+k (to register only once) */
+  isFieldFocusRegistered: boolean;
+
+  /* Sample data (commonly used) */
+  clients: Client[];
+  history: History[];
+};
+
+type UserPayload = {
+  name: string | null;
+  email: string | null;
+  avatar: string | null;
+};
 
 export const useMainStore = defineStore("main", {
-  state: () => ({
+  state: (): State => ({
     /* User */
     userName: null,
     userEmail: null,
@@ -16,7 +36,7 @@ export const useMainStore = defineStore("main", {
     history: [],
   }),
   actions: {
-    setUser(payload) {
+    setUser(payload: UserPayload) {
       if (payload.name) {
         this.userName = payload.name;
       }
@@ -28,7 +48,7 @@ export const useMainStore = defineStore("main", {
       }
     },
 
-    fetch(sampleDataKey) {
+    fetch(sampleDataKey: "clients" | "history") {
       axios
         .get(`data-sources/${sampleDataKey}.json`)
         .then((r) => {
