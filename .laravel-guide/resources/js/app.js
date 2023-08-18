@@ -1,8 +1,8 @@
 import "../css/main.css";
 
 import { createPinia } from "pinia";
-import { useStyleStore } from "@/stores/style.js";
-import { darkModeKey, styleKey } from "@/config.js";
+import { useStyleStore } from "@/stores/style";
+import { darkModeKey, styleKey } from "@/config";
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
