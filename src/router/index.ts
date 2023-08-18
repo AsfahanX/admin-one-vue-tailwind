@@ -1,8 +1,18 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  type RouteRecordRaw,
+} from "vue-router";
 import Style from "@/views/StyleView.vue";
 import Home from "@/views/HomeView.vue";
 
-const routes = [
+declare module "vue-router" {
+  interface RouteMeta {
+    title: string;
+  }
+}
+
+const routes: RouteRecordRaw[] = [
   {
     meta: {
       title: "Select style",
