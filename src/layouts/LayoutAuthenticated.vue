@@ -35,7 +35,7 @@ router.beforeEach(() => {
   isAsideLgActive.value = false;
 });
 
-const menuClick = (event: MouseEvent, item: MenuItem) => {
+const menuClick = (item: MenuItem) => {
   if (item.isToggleLightDark) {
     styleStore.setDarkMode();
   }

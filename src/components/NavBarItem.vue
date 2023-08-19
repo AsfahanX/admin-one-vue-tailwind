@@ -15,7 +15,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+  (e: "menu-click", item: MenuItem): void;
 }>();
 
 const is = computed(() => {
@@ -53,16 +53,16 @@ const itemLabel = computed(() =>
 
 const isDropdownActive = ref(false);
 
-const menuClick = (event: MouseEvent) => {
-  emit("menu-click", event, props.item);
+const menuClick = () => {
+  emit("menu-click", props.item);
 
   if (props.item.menu) {
     isDropdownActive.value = !isDropdownActive.value;
   }
 };
 
-const menuClickDropdown = (event: MouseEvent, item: MenuItem) => {
-  emit("menu-click", event, item);
+const menuClickDropdown = (item: MenuItem) => {
+  emit("menu-click", item);
 };
 
 const root = ref<HTMLElement | null>(null);

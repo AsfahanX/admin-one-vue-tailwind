@@ -12,11 +12,11 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+  (e: "menu-click", item: MenuItem): void;
 }>();
 
-const menuClick = (event: MouseEvent, item: MenuItem) => {
-  emit("menu-click", event, item);
+const menuClick = (item: MenuItem) => {
+  emit("menu-click", item);
 };
 
 const isMenuNavBarActive = ref(false);

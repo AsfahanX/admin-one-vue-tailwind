@@ -10,16 +10,16 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
-  (e: "aside-lg-close-click", event: MouseEvent): void;
+  (e: "menu-click", item: MenuItem): void;
+  (e: "aside-lg-close-click"): void;
 }>();
 
-const menuClick = (event: MouseEvent, item: MenuItem) => {
-  emit("menu-click", event, item);
+const menuClick = (item: MenuItem) => {
+  emit("menu-click", item);
 };
 
-const asideLgCloseClick = (event: MouseEvent) => {
-  emit("aside-lg-close-click", event);
+const asideLgCloseClick = () => {
+  emit("aside-lg-close-click");
 };
 </script>
 

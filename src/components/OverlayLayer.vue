@@ -13,11 +13,11 @@ withDefaults(
 );
 
 const emit = defineEmits<{
-  (e: "overlay-click", event: MouseEvent): void;
+  (e: "overlay-click"): void;
 }>();
 
-const overlayClick = (event: MouseEvent) => {
-  emit("overlay-click", event);
+const overlayClick = () => {
+  emit("overlay-click");
 };
 
 const styleStore = useStyleStore();

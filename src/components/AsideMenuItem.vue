@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+  (e: "menu-click", item: MenuItem): void;
 }>();
 
 const styleStore = useStyleStore();
@@ -36,8 +36,8 @@ const componentClass = computed(() => [
 
 const hasDropdown = computed(() => !!props.item.menu);
 
-const menuClick = (event: MouseEvent) => {
-  emit("menu-click", event, props.item);
+const menuClick = () => {
+  emit("menu-click", props.item);
 
   if (hasDropdown.value) {
     isDropdownActive.value = !isDropdownActive.value;
