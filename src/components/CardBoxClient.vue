@@ -6,13 +6,14 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import PillTag from "@/components/PillTag.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
 import type { ColorVariant } from "@/colors";
+import type { Client } from "@/types";
 
 const props = withDefaults(
   defineProps<{
-    name: string;
-    login: string;
-    date: string;
-    progress?: number;
+    name: Client["name"];
+    login: Client["login"];
+    date: Client["created"];
+    progress?: Client["progress"];
     text?: string;
     type?: ColorVariant;
   }>(),

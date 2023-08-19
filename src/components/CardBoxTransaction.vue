@@ -11,14 +11,15 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import PillTag from "@/components/PillTag.vue";
 import IconRounded from "@/components/IconRounded.vue";
 import type { ColorVariant } from "@/colors";
+import type { Transaction } from "@/types";
 
 const props = defineProps<{
-  amount: number;
-  date: string;
-  business: string;
-  type: "withdrawal" | "deposit" | "invoice";
-  name: string;
-  account: string;
+  amount: Transaction["amount"];
+  date: Transaction["date"];
+  business: Transaction["business"];
+  type: Transaction["type"];
+  name: Transaction["name"];
+  account: Transaction["account"];
 }>();
 
 const icon = computed<{ icon: string; type: ColorVariant }>(() => {

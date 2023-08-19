@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import type { Client, History } from "@/types";
+import type { Client, Transaction } from "@/types";
 
 type State = {
   userName: UserPayload["name"];
@@ -12,7 +12,7 @@ type State = {
 
   /* Sample data (commonly used) */
   clients: Client[];
-  history: History[];
+  history: Transaction[];
 };
 
 type UserPayload = {

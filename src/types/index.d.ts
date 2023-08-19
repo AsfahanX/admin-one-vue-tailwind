@@ -1,7 +1,23 @@
-export type Client =
-  typeof import("../../public/data-sources/clients.json")["data"][number];
-export type History =
-  typeof import("../../public/data-sources/history.json")["data"][number];
+export type Client = {
+  id: number;
+  avatar: string;
+  login: string;
+  name: string;
+  company: string;
+  city: string;
+  progress: number;
+  created: string;
+  created_mm_dd_yyyy: string;
+};
+
+export type Transaction = {
+  amount: number;
+  account: string;
+  name: string;
+  date: string;
+  type: "deposit" | "payment" | "invoice" | "withdrawal";
+  business: string;
+};
 
 export type MenuItem = {
   label?: string;
