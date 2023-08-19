@@ -1,7 +1,7 @@
-<script setup>
-defineProps({
-  noPadding: Boolean,
-});
+<script setup lang="ts">
+defineProps<{
+  noPadding?: boolean;
+}>();
 </script>
 
 <template>

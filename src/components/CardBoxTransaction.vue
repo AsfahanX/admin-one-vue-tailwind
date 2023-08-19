@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import {
   mdiCashMinus,
@@ -10,35 +10,18 @@ import CardBox from "@/components/CardBox.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import PillTag from "@/components/PillTag.vue";
 import IconRounded from "@/components/IconRounded.vue";
+import type { ColorVariant } from "@/colors";
 
-const props = defineProps({
-  amount: {
-    type: Number,
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
-  business: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  account: {
-    type: String,
-    required: true,
-  },
-});
+const props = defineProps<{
+  amount: number;
+  date: string;
+  business: string;
+  type: "withdrawal" | "deposit" | "invoice";
+  name: string;
+  account: string;
+}>();
 
-const icon = computed(() => {
+const icon = computed<{ icon: string; type: ColorVariant }>(() => {
   if (props.type === "withdrawal") {
     return {
       icon: mdiCashMinus,

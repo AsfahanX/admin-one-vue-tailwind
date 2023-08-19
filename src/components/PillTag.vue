@@ -1,24 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
-import { colorsBgLight, colorsOutline } from "@/colors";
+import { type ColorVariant, colorsBgLight, colorsOutline } from "@/colors";
 import PillTagPlain from "@/components/PillTagPlain.vue";
 
-const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  color: {
-    type: String,
-    required: true,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  small: Boolean,
-  outline: Boolean,
-});
+const props = withDefaults(
+  defineProps<{
+    label: string;
+    color: ColorVariant;
+    icon?: string;
+    small?: boolean;
+    outline?: boolean;
+  }>(),
+  {
+    icon: undefined,
+  }
+);
 
 const componentClass = computed(() => [
   props.small ? "py-1 px-3" : "py-1.5 px-4",

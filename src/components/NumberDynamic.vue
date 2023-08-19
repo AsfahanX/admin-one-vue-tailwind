@@ -1,25 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watch, onMounted } from "vue";
 import numeral from "numeral";
 
-const props = defineProps({
-  prefix: {
-    type: String,
-    default: null,
-  },
-  suffix: {
-    type: String,
-    default: null,
-  },
-  value: {
-    type: Number,
-    default: 0,
-  },
-  duration: {
-    type: Number,
-    default: 500,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    prefix?: string;
+    suffix?: string;
+    value?: number;
+    duration?: number;
+  }>(),
+  {
+    prefix: undefined,
+    suffix: undefined,
+    value: 0,
+    duration: 500,
+  }
+);
 
 const newValue = ref(0);
 
@@ -29,7 +25,7 @@ const newValueFormatted = computed(() =>
 
 const value = computed(() => props.value);
 
-const grow = (m) => {
+const grow = (m: number) => {
   const v = Math.ceil(newValue.value + m);
 
   if (v > value.value) {

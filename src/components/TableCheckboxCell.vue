@@ -1,14 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from "vue";
 
-defineProps({
-  type: {
-    type: String,
-    default: "td",
-  },
-});
+withDefaults(
+  defineProps<{
+    type?: string;
+  }>(),
+  {
+    type: "td",
+  }
+);
 
-const emit = defineEmits(["checked"]);
+const emit = defineEmits<{
+  (e: "checked", checked: boolean): void;
+}>();
 
 const checked = ref(false);
 

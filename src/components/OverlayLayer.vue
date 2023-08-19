@@ -1,20 +1,22 @@
-<script setup>
+<script setup lang="ts">
 import { useStyleStore } from "@/stores/style";
 
-defineProps({
-  zIndex: {
-    type: String,
-    default: "z-50",
-  },
-  type: {
-    type: String,
-    default: "flex",
-  },
-});
+withDefaults(
+  defineProps<{
+    zIndex?: string;
+    type?: string;
+  }>(),
+  {
+    zIndex: "z-50",
+    type: "flex",
+  }
+);
 
-const emit = defineEmits(["overlay-click"]);
+const emit = defineEmits<{
+  (e: "overlay-click", event: MouseEvent): void;
+}>();
 
-const overlayClick = (event) => {
+const overlayClick = (event: MouseEvent) => {
   emit("overlay-click", event);
 };
 

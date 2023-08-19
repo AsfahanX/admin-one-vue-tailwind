@@ -1,21 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { mdiClose, mdiDotsVertical } from "@mdi/js";
 import { containerMaxW } from "@/config";
 import BaseIcon from "@/components/BaseIcon.vue";
 import NavBarMenuList from "@/components/NavBarMenuList.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
+import type { MenuItem } from "@/types";
 
-defineProps({
-  menu: {
-    type: Array,
-    required: true,
-  },
-});
+defineProps<{
+  menu: MenuItem[];
+}>();
 
-const emit = defineEmits(["menu-click"]);
+const emit = defineEmits<{
+  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+}>();
 
-const menuClick = (event, item) => {
+const menuClick = (event: MouseEvent, item: MenuItem) => {
   emit("menu-click", event, item);
 };
 

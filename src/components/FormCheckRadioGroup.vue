@@ -1,33 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import FormCheckRadio from "@/components/FormCheckRadio.vue";
 
-const props = defineProps({
-  options: {
-    type: Object,
-    default: () => {},
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    default: "checkbox",
-    validator: (value) => ["checkbox", "radio", "switch"].includes(value),
-  },
-  componentClass: {
-    type: String,
-    default: null,
-  },
-  isColumn: Boolean,
-  modelValue: {
-    type: [Array, String, Number, Boolean],
-    default: null,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    options: Record<string, string>;
+    name: string;
+    type?: "checkbox" | "radio" | "switch";
+    componentClass?: string;
+    isColumn?: boolean;
+    modelValue?: unknown[] | string | number | boolean;
+  }>(),
+  {
+    options: () => ({} as Record<string, string>),
+    type: "checkbox",
+    componentClass: undefined,
+    modelValue: undefined,
+  }
+);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<{
+  (e: "update:modelValue", value: typeof props.modelValue): void;
+}>();
 
 const computedValue = computed({
   get: () => props.modelValue,

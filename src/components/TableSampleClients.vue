@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 import { useMainStore } from "@/stores/main";
 import { mdiEye, mdiTrashCan } from "@mdi/js";
@@ -8,10 +8,11 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
+import type { Client } from "@/types";
 
-defineProps({
-  checkable: Boolean,
-});
+defineProps<{
+  checkable?: boolean;
+}>();
 
 const mainStore = useMainStore();
 
@@ -25,7 +26,7 @@ const perPage = ref(5);
 
 const currentPage = ref(0);
 
-const checkedRows = ref([]);
+const checkedRows = ref([] as Client[]);
 
 const itemsPaginated = computed(() =>
   items.value.slice(
@@ -48,8 +49,8 @@ const pagesList = computed(() => {
   return pagesList;
 });
 
-const remove = (arr, cb) => {
-  const newArr = [];
+function remove<T>(arr: T[], cb: (item: T) => boolean) {
+  const newArr = [] as T[];
 
   arr.forEach((item) => {
     if (!cb(item)) {
@@ -58,9 +59,9 @@ const remove = (arr, cb) => {
   });
 
   return newArr;
-};
+}
 
-const checked = (isChecked, client) => {
+const checked = (isChecked: boolean, client: Client) => {
   if (isChecked) {
     checkedRows.value.push(client);
   } else {

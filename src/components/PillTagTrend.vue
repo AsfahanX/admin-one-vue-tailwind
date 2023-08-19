@@ -1,21 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { mdiChevronUp, mdiChevronDown, mdiAlertCircleOutline } from "@mdi/js";
 import PillTag from "@/components/PillTag.vue";
+import type { ColorVariant } from "@/colors";
 
-const props = defineProps({
-  trend: {
-    type: String,
-    required: true,
-  },
-  trendType: {
-    type: String,
-    default: null,
-  },
-  small: Boolean,
-});
+const props = defineProps<{
+  trend: string;
+  trendType?: "up" | "down" | "alert";
+  small?: boolean;
+}>();
 
-const trendStyle = computed(() => {
+const trendStyle = computed<{ icon?: string; style: ColorVariant }>(() => {
   if (props.trendType === "up") {
     return {
       icon: mdiChevronUp,

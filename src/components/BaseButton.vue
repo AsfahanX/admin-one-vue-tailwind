@@ -1,52 +1,43 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
-import { RouterLink } from "vue-router";
-import { getButtonColor } from "@/colors";
+import { RouterLink, type RouterLinkProps } from "vue-router";
+import { getButtonColor, type ButtonColorVariant } from "@/colors";
 import BaseIcon from "@/components/BaseIcon.vue";
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  Component,
+} from "vue";
 
-const props = defineProps({
-  label: {
-    type: [String, Number],
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  iconSize: {
-    type: [String, Number],
-    default: null,
-  },
-  href: {
-    type: String,
-    default: null,
-  },
-  target: {
-    type: String,
-    default: null,
-  },
-  to: {
-    type: [String, Object],
-    default: null,
-  },
-  type: {
-    type: String,
-    default: null,
-  },
-  color: {
-    type: String,
-    default: "white",
-  },
-  as: {
-    type: String,
-    default: null,
-  },
-  small: Boolean,
-  outline: Boolean,
-  active: Boolean,
-  disabled: Boolean,
-  roundedFull: Boolean,
-});
+const props = withDefaults(
+  defineProps<{
+    label?: string | number;
+    icon?: string;
+    iconSize?: number | `${number}`;
+    href?: AnchorHTMLAttributes["href"];
+    target?: AnchorHTMLAttributes["target"];
+    to?: RouterLinkProps["to"];
+    type?: ButtonHTMLAttributes["type"];
+    color?: ButtonColorVariant;
+    as?: string | Component;
+    small?: boolean;
+    outline?: boolean;
+    active?: boolean;
+    disabled?: boolean;
+    roundedFull?: boolean;
+  }>(),
+  {
+    label: undefined,
+    icon: undefined,
+    iconSize: undefined,
+    href: undefined,
+    target: undefined,
+    to: undefined,
+    type: undefined,
+    color: "white",
+    as: undefined,
+  }
+);
 
 const is = computed(() => {
   if (props.as) {

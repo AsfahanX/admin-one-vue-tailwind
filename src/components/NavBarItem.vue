@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import { RouterLink } from "vue-router";
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
@@ -8,15 +8,15 @@ import BaseIcon from "@/components/BaseIcon.vue";
 import UserAvatarCurrentUser from "@/components/UserAvatarCurrentUser.vue";
 import NavBarMenuList from "@/components/NavBarMenuList.vue";
 import BaseDivider from "@/components/BaseDivider.vue";
+import type { MenuItem } from "@/types";
 
-const props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
-});
+const props = defineProps<{
+  item: MenuItem;
+}>();
 
-const emit = defineEmits(["menu-click"]);
+const emit = defineEmits<{
+  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+}>();
 
 const is = computed(() => {
   if (props.item.href) {
@@ -53,7 +53,7 @@ const itemLabel = computed(() =>
 
 const isDropdownActive = ref(false);
 
-const menuClick = (event) => {
+const menuClick = (event: MouseEvent) => {
   emit("menu-click", event, props.item);
 
   if (props.item.menu) {
@@ -61,14 +61,14 @@ const menuClick = (event) => {
   }
 };
 
-const menuClickDropdown = (event, item) => {
+const menuClickDropdown = (event: MouseEvent, item: MenuItem) => {
   emit("menu-click", event, item);
 };
 
-const root = ref(null);
+const root = ref<HTMLElement | null>(null);
 
-const forceClose = (event) => {
-  if (root.value && !root.value.contains(event.target)) {
+const forceClose = (event: MouseEvent) => {
+  if (root.value && !root.value.contains(event.target as HTMLElement)) {
     isDropdownActive.value = false;
   }
 };

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { useStyleStore } from "@/stores/style";
 import {
@@ -7,13 +7,9 @@ import {
   gradientBgPinkRed,
 } from "@/colors";
 
-const props = defineProps({
-  bg: {
-    type: String,
-    required: true,
-    validator: (value) => ["purplePink", "pinkRed"].includes(value),
-  },
-});
+const props = defineProps<{
+  bg: "purplePink" | "pinkRed";
+}>();
 
 const colorClass = computed(() => {
   if (useStyleStore().darkMode) {

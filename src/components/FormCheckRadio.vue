@@ -1,31 +1,24 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    default: "checkbox",
-    validator: (value) => ["checkbox", "radio", "switch"].includes(value),
-  },
-  label: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: [Array, String, Number, Boolean],
-    default: null,
-  },
-  inputValue: {
-    type: [String, Number, Boolean],
-    required: true,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    name: string;
+    type?: "checkbox" | "radio" | "switch";
+    label?: string;
+    modelValue?: unknown[] | string | number | boolean;
+    inputValue: string | number | boolean;
+  }>(),
+  {
+    type: "checkbox",
+    label: undefined,
+    modelValue: undefined,
+  }
+);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<{
+  (e: "update:modelValue", value: typeof props.modelValue): void;
+}>();
 
 const computedValue = computed({
   get: () => props.modelValue,

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 import { useStyleStore } from "@/stores/style";
@@ -6,16 +6,16 @@ import { mdiMinus, mdiPlus } from "@mdi/js";
 import { getButtonColor } from "@/colors";
 import BaseIcon from "@/components/BaseIcon.vue";
 import AsideMenuList from "@/components/AsideMenuList.vue";
+import type { MenuItem } from "@/types";
 
-const props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
-  isDropdownList: Boolean,
-});
+const props = defineProps<{
+  item: MenuItem;
+  isDropdownList?: boolean;
+}>();
 
-const emit = defineEmits(["menu-click"]);
+const emit = defineEmits<{
+  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+}>();
 
 const styleStore = useStyleStore();
 
@@ -36,7 +36,7 @@ const componentClass = computed(() => [
 
 const hasDropdown = computed(() => !!props.item.menu);
 
-const menuClick = (event) => {
+const menuClick = (event: MouseEvent) => {
   emit("menu-click", event, props.item);
 
   if (hasDropdown.value) {
@@ -82,7 +82,7 @@ const menuClick = (event) => {
       />
     </component>
     <AsideMenuList
-      v-if="hasDropdown"
+      v-if="hasDropdown && item.menu?.length"
       :menu="item.menu"
       :class="[
         styleStore.asideMenuDropdownStyle,

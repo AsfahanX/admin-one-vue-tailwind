@@ -1,16 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import BaseIcon from "@/components/BaseIcon.vue";
 
-defineProps({
-  icon: {
-    type: String,
-    default: null,
-  },
-  h: {
-    type: String,
-    default: null,
-  },
-});
+defineProps<{
+  icon: string;
+  h?: string;
+}>();
 </script>
 
 <template>

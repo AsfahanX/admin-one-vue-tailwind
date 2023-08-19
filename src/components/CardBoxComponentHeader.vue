@@ -1,24 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import BaseIcon from "@/components/BaseIcon.vue";
 
-defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  buttonIcon: {
-    type: String,
-    default: null,
-  },
-});
+defineProps<{
+  title: string;
+  icon?: string;
+  buttonIcon?: string;
+}>();
 
-const emit = defineEmits(["button-click"]);
+const emit = defineEmits<{
+  (e: "button-click", event: MouseEvent): void;
+}>();
 
-const buttonClick = (event) => {
+const buttonClick = (event: MouseEvent) => {
   emit("button-click", event);
 };
 </script>

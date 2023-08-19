@@ -1,5 +1,5 @@
-<script setup>
-import { ref, watch, computed, onMounted } from "vue";
+<script setup lang="ts">
+import { ref, watch, computed, onMounted, type PropType } from "vue";
 import {
   Chart,
   LineElement,
@@ -8,18 +8,17 @@ import {
   LinearScale,
   CategoryScale,
   Tooltip,
+  type ChartItem,
+  type ChartData,
 } from "chart.js";
 
-const props = defineProps({
-  data: {
-    type: Object,
-    required: true,
-  },
-});
+const props = defineProps<{
+  data: ChartData;
+}>();
 
-const root = ref(null);
+const root = ref<ChartItem | null>(null);
 
-let chart;
+let chart: Chart;
 
 Chart.register(
   LineElement,
@@ -31,6 +30,10 @@ Chart.register(
 );
 
 onMounted(() => {
+  if (!root.value) {
+    return;
+  }
+
   chart = new Chart(root.value, {
     type: "line",
     data: props.data,

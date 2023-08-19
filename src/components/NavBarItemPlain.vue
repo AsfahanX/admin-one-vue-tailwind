@@ -1,13 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { useStyleStore } from "@/stores/style";
 
-defineProps({
-  display: {
-    type: String,
-    default: "flex",
-  },
-  useMargin: Boolean,
-});
+withDefaults(
+  defineProps<{
+    display?: string;
+    useMargin?: boolean;
+  }>(),
+  {
+    display: "flex",
+  }
+);
 
 const styleStore = useStyleStore();
 </script>

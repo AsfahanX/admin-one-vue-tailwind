@@ -1,17 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import AsideMenuItem from "@/components/AsideMenuItem.vue";
+import type { MenuItem } from "@/types";
 
-defineProps({
-  isDropdownList: Boolean,
-  menu: {
-    type: Array,
-    required: true,
-  },
-});
+defineProps<{
+  isDropdownList?: boolean;
+  menu: MenuItem[];
+}>();
 
-const emit = defineEmits(["menu-click"]);
+const emit = defineEmits<{
+  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+}>();
 
-const menuClick = (event, item) => {
+const menuClick = (event: MouseEvent, item: MenuItem) => {
   emit("menu-click", event, item);
 };
 </script>

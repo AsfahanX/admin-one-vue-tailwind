@@ -1,19 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { mdiLogout, mdiClose } from "@mdi/js";
 import { computed } from "vue";
 import { useStyleStore } from "@/stores/style";
 import AsideMenuList from "@/components/AsideMenuList.vue";
 import AsideMenuItem from "@/components/AsideMenuItem.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
+import type { MenuItem } from "@/types";
 
-defineProps({
-  menu: {
-    type: Array,
-    required: true,
-  },
-});
+defineProps<{
+  menu: MenuItem[];
+}>();
 
-const emit = defineEmits(["menu-click", "aside-lg-close-click"]);
+const emit = defineEmits<{
+  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+  (e: "aside-lg-close-click", event: MouseEvent): void;
+}>();
 
 const styleStore = useStyleStore();
 
@@ -24,11 +25,11 @@ const logoutItem = computed(() => ({
   isLogout: true,
 }));
 
-const menuClick = (event, item) => {
+const menuClick = (event: MouseEvent, item: MenuItem) => {
   emit("menu-click", event, item);
 };
 
-const asideLgCloseClick = (event) => {
+const asideLgCloseClick = (event: MouseEvent) => {
   emit("aside-lg-close-click", event);
 };
 </script>

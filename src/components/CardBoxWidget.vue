@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { mdiCog } from "@mdi/js";
 import CardBox from "@/components/CardBox.vue";
 import NumberDynamic from "@/components/NumberDynamic.vue";
@@ -7,40 +7,28 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import PillTagTrend from "@/components/PillTagTrend.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
-defineProps({
-  number: {
-    type: Number,
-    default: 0,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  prefix: {
-    type: String,
-    default: null,
-  },
-  suffix: {
-    type: String,
-    default: null,
-  },
-  label: {
-    type: String,
-    default: null,
-  },
-  color: {
-    type: String,
-    default: null,
-  },
-  trend: {
-    type: String,
-    default: null,
-  },
-  trendType: {
-    type: String,
-    default: null,
-  },
-});
+withDefaults(
+  defineProps<{
+    number?: number;
+    icon?: string;
+    prefix?: string;
+    suffix?: string;
+    label?: string;
+    color?: string;
+    trend?: string;
+    trendType?: "up" | "down" | "alert";
+  }>(),
+  {
+    number: 0,
+    icon: undefined,
+    prefix: undefined,
+    suffix: undefined,
+    label: undefined,
+    color: undefined,
+    trend: undefined,
+    trendType: undefined,
+  }
+);
 </script>
 
 <template>

@@ -1,26 +1,20 @@
-<script setup>
-import { colorsText, colorsBgLight } from "@/colors";
+<script setup lang="ts">
+import { colorsText, colorsBgLight, type ColorVariant } from "@/colors";
 import BaseIcon from "@/components/BaseIcon.vue";
 
-defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
-  color: {
-    type: String,
-    default: null,
-  },
-  w: {
-    type: String,
-    default: "w-12",
-  },
-  h: {
-    type: String,
-    default: "h-12",
-  },
-  bg: Boolean,
-});
+withDefaults(
+  defineProps<{
+    icon: string;
+    color: ColorVariant;
+    w?: string;
+    h?: string;
+    bg?: boolean;
+  }>(),
+  {
+    w: "w-12",
+    h: "h-12",
+  }
+);
 </script>
 
 <template>

@@ -1,23 +1,24 @@
-<script setup>
+<script setup lang="ts">
 import AsideMenuLayer from "@/components/AsideMenuLayer.vue";
 import OverlayLayer from "@/components/OverlayLayer.vue";
+import type { MenuItem } from "@/types";
 
-defineProps({
-  menu: {
-    type: Array,
-    required: true,
-  },
-  isAsideMobileExpanded: Boolean,
-  isAsideLgActive: Boolean,
-});
+defineProps<{
+  menu: MenuItem[];
+  isAsideMobileExpanded?: boolean;
+  isAsideLgActive?: boolean;
+}>();
 
-const emit = defineEmits(["menu-click", "aside-lg-close-click"]);
+const emit = defineEmits<{
+  (e: "menu-click", event: MouseEvent, item: MenuItem): void;
+  (e: "aside-lg-close-click", event: MouseEvent): void;
+}>();
 
-const menuClick = (event, item) => {
+const menuClick = (event: MouseEvent, item: MenuItem) => {
   emit("menu-click", event, item);
 };
 
-const asideLgCloseClick = (event) => {
+const asideLgCloseClick = (event: MouseEvent) => {
   emit("aside-lg-close-click", event);
 };
 </script>

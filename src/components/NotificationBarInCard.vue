@@ -1,12 +1,9 @@
-<script setup>
-import { colorsBgLight } from "@/colors";
+<script setup lang="ts">
+import { type ColorVariant, colorsBgLight } from "@/colors";
 
-defineProps({
-  color: {
-    type: String,
-    required: true,
-  },
-});
+defineProps<{
+  color: ColorVariant;
+}>();
 </script>
 
 <template>

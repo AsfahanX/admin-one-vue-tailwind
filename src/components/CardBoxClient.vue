@@ -1,37 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { mdiTrendingDown, mdiTrendingUp, mdiTrendingNeutral } from "@mdi/js";
 import CardBox from "@/components/CardBox.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import PillTag from "@/components/PillTag.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
+import type { ColorVariant } from "@/colors";
 
-const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  login: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
-  progress: {
-    type: Number,
-    default: 0,
-  },
-  text: {
-    type: String,
-    default: null,
-  },
-  type: {
-    type: String,
-    default: null,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    name: string;
+    login: string;
+    date: string;
+    progress?: number;
+    text?: string;
+    type?: ColorVariant;
+  }>(),
+  {
+    progress: 0,
+    text: undefined,
+    type: undefined,
+  }
+);
 
 const pillType = computed(() => {
   if (props.type) {
@@ -53,12 +43,13 @@ const pillType = computed(() => {
 });
 
 const pillIcon = computed(() => {
-  return {
+  const icons: Partial<Record<ColorVariant, string>> = {
     success: mdiTrendingUp,
     warning: mdiTrendingNeutral,
     danger: mdiTrendingDown,
-    info: null,
-  }[pillType.value];
+    info: undefined,
+  };
+  return icons[pillType.value];
 });
 
 const pillText = computed(() => props.text ?? `${props.progress}%`);

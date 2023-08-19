@@ -1,20 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps({
-  username: {
-    type: String,
-    required: true,
-  },
-  avatar: {
-    type: String,
-    default: null,
-  },
-  api: {
-    type: String,
-    default: "avataaars",
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    username: string;
+    avatar?: string;
+    api?: string;
+  }>(),
+  {
+    avatar: undefined,
+    api: "avataaars",
+  }
+);
 
 const avatar = computed(
   () =>

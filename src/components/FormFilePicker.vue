@@ -1,37 +1,34 @@
-<script setup>
+<script setup lang="ts">
 import { mdiUpload } from "@mdi/js";
 import { computed, ref, watch } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
+import type { ButtonColorVariant } from "@/colors";
 
-const props = defineProps({
-  modelValue: {
-    type: [Object, File, Array],
-    default: null,
-  },
-  label: {
-    type: String,
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: mdiUpload,
-  },
-  accept: {
-    type: String,
-    default: null,
-  },
-  color: {
-    type: String,
-    default: "info",
-  },
-  isRoundIcon: Boolean,
-});
+const props = withDefaults(
+  defineProps<{
+    modelValue?: File | null;
+    label?: string;
+    icon?: string;
+    accept?: string;
+    color?: ButtonColorVariant;
+    isRoundIcon?: boolean;
+  }>(),
+  {
+    modelValue: null,
+    label: undefined,
+    icon: mdiUpload,
+    accept: undefined,
+    color: "info",
+  }
+);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<{
+  (e: "update:modelValue", value: typeof props.modelValue): void;
+}>();
 
-const root = ref(null);
+const root = ref<HTMLInputElement | null>(null);
 
-const file = ref(props.modelValue);
+const file = ref<File | null>(props.modelValue);
 
 const showFilename = computed(() => !props.isRoundIcon && file.value);
 
@@ -45,8 +42,12 @@ watch(modelValueProp, (value) => {
   }
 });
 
-const upload = (event) => {
-  const value = event.target.files || event.dataTransfer.files;
+const upload = (event: Event) => {
+  const value =
+    (event.target as HTMLInputElement).files ||
+    (event as InputEvent).dataTransfer?.files;
+
+  if (!value?.length) return;
 
   file.value = value[0];
 
@@ -89,7 +90,7 @@ const upload = (event) => {
         as="a"
         :class="{ 'w-12 h-12': isRoundIcon, 'rounded-r-none': showFilename }"
         :icon-size="isRoundIcon ? 24 : undefined"
-        :label="isRoundIcon ? null : label"
+        :label="isRoundIcon ? undefined : label"
         :icon="icon"
         :color="color"
         :rounded-full="isRoundIcon"
@@ -107,7 +108,7 @@ const upload = (event) => {
       class="px-4 py-2 bg-gray-100 dark:bg-slate-800 border-gray-200 dark:border-slate-700 border rounded-r"
     >
       <span class="text-ellipsis line-clamp-1">
-        {{ file.name }}
+        {{ file?.name }}
       </span>
     </div>
   </div>

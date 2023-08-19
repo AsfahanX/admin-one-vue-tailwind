@@ -1,25 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { computed, useSlots } from "vue";
 import CardBoxComponentBody from "@/components/CardBoxComponentBody.vue";
 import CardBoxComponentFooter from "@/components/CardBoxComponentFooter.vue";
 
-const props = defineProps({
-  rounded: {
-    type: String,
-    default: "rounded-2xl",
-  },
-  flex: {
-    type: String,
-    default: "flex-col",
-  },
-  hasComponentLayout: Boolean,
-  hasTable: Boolean,
-  isForm: Boolean,
-  isHoverable: Boolean,
-  isModal: Boolean,
-});
+const props = withDefaults(
+  defineProps<{
+    rounded?: string;
+    flex?: string;
+    hasComponentLayout?: boolean;
+    hasTable?: boolean;
+    isForm?: boolean;
+    isHoverable?: boolean;
+    isModal?: boolean;
+  }>(),
+  {
+    rounded: "rounded-2xl",
+    flex: "flex-col",
+  }
+);
 
-const emit = defineEmits(["submit"]);
+const emit = defineEmits<{
+  (e: "submit", event: SubmitEvent): void;
+}>();
 
 const slots = useSlots();
 
@@ -39,7 +41,7 @@ const componentClass = computed(() => {
   return base;
 });
 
-const submit = (event) => {
+const submit = (event: SubmitEvent) => {
   emit("submit", event);
 };
 </script>

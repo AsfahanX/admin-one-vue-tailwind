@@ -1,61 +1,63 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import { useMainStore } from "@/stores/main";
 import FormControlIcon from "@/components/FormControlIcon.vue";
+import type { InputHTMLAttributes } from "vue";
 
-const props = defineProps({
-  name: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  autocomplete: {
-    type: String,
-    default: null,
-  },
-  maxlength: {
-    type: String,
-    default: null,
-  },
-  placeholder: {
-    type: String,
-    default: null,
-  },
-  inputmode: {
-    type: String,
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  options: {
-    type: Array,
-    default: null,
-  },
-  type: {
-    type: String,
-    default: "text",
-  },
-  modelValue: {
-    type: [String, Number, Boolean, Array, Object],
-    default: "",
-  },
-  required: Boolean,
-  borderless: Boolean,
-  transparent: Boolean,
-  ctrlKFocus: Boolean,
-});
+type OptionItem = { id: number | string; label: string };
 
-const emit = defineEmits(["update:modelValue", "setRef"]);
+const props = withDefaults(
+  defineProps<{
+    name?: string;
+    id?: string;
+    autocomplete?: string;
+    maxlength?: string;
+    placeholder?: string;
+    inputmode?: InputHTMLAttributes["inputmode"];
+    icon?: string;
+    options?: string[] | OptionItem[];
+    type?: InputHTMLAttributes["type"];
+    modelValue?:
+      | string
+      | number
+      | boolean
+      | unknown[]
+      | Record<string, unknown>;
+    required?: boolean;
+    borderless?: boolean;
+    transparent?: boolean;
+    ctrlKFocus?: boolean;
+  }>(),
+  {
+    name: undefined,
+    id: undefined,
+    autocomplete: undefined,
+    maxlength: undefined,
+    placeholder: undefined,
+    inputmode: undefined,
+    icon: undefined,
+    options: undefined,
+    type: "text",
+    modelValue: "",
+  }
+);
+
+const emit = defineEmits<{
+  (e: "update:modelValue", value: typeof props.modelValue): void;
+  (e: "setRef", value: HTMLElement | null): void;
+}>();
 
 const computedValue = computed({
   get: () => props.modelValue,
   set: (value) => {
     emit("update:modelValue", value);
+  },
+});
+
+const textAreaValue = computed({
+  get: () => computedValue.value as string | number | string[],
+  set: (value) => {
+    computedValue.value = value;
   },
 });
 
@@ -83,11 +85,11 @@ const controlIconH = computed(() =>
 
 const mainStore = useMainStore();
 
-const selectEl = ref(null);
+const selectEl = ref<HTMLElement | null>(null);
 
-const textareaEl = ref(null);
+const textareaEl = ref<HTMLElement | null>(null);
 
-const inputEl = ref(null);
+const inputEl = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
   if (selectEl.value) {
@@ -100,12 +102,12 @@ onMounted(() => {
 });
 
 if (props.ctrlKFocus) {
-  const fieldFocusHook = (e) => {
+  const fieldFocusHook = (e: KeyboardEvent) => {
     if (e.ctrlKey && e.key === "k") {
       e.preventDefault();
-      inputEl.value.focus();
+      inputEl.value?.focus();
     } else if (e.key === "Escape") {
-      inputEl.value.blur();
+      inputEl.value?.blur();
     }
   };
 
@@ -136,16 +138,16 @@ if (props.ctrlKFocus) {
     >
       <option
         v-for="option in options"
-        :key="option.id ?? option"
+        :key="typeof option !== 'string' ? option.id : option"
         :value="option"
       >
-        {{ option.label ?? option }}
+        {{ typeof option !== "string" ? option.label : option }}
       </option>
     </select>
     <textarea
       v-else-if="computedType === 'textarea'"
       :id="id"
-      v-model="computedValue"
+      v-model="textAreaValue"
       :class="inputElClass"
       :name="name"
       :maxlength="maxlength"

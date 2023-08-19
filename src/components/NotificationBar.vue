@@ -1,22 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, useSlots } from "vue";
 import { mdiClose } from "@mdi/js";
-import { colorsBgLight, colorsOutline } from "@/colors";
+import { type ColorVariant, colorsBgLight, colorsOutline } from "@/colors";
 import BaseLevel from "@/components/BaseLevel.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
-const props = defineProps({
-  icon: {
-    type: String,
-    default: null,
-  },
-  outline: Boolean,
-  color: {
-    type: String,
-    required: true,
-  },
-});
+const props = defineProps<{
+  icon?: string;
+  outline?: boolean;
+  color: ColorVariant;
+}>();
 
 const componentClass = computed(() =>
   props.outline ? colorsOutline[props.color] : colorsBgLight[props.color]

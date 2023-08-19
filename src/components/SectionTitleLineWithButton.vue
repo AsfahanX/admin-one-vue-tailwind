@@ -1,21 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { mdiCog } from "@mdi/js";
 import { useSlots, computed } from "vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import IconRounded from "@/components/IconRounded.vue";
 
-defineProps({
-  icon: {
-    type: String,
-    default: null,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  main: Boolean,
-});
+defineProps<{
+  icon?: string;
+  title: string;
+  main?: boolean;
+}>();
 
 const hasSlot = computed(() => useSlots().default);
 </script>

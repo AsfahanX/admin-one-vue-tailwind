@@ -1,52 +1,65 @@
-<script setup>
-import { computed } from "vue";
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted } from "vue";
 import { mdiClose } from "@mdi/js";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import CardBox from "@/components/CardBox.vue";
 import OverlayLayer from "@/components/OverlayLayer.vue";
 import CardBoxComponentTitle from "@/components/CardBoxComponentTitle.vue";
+import type { ButtonColorVariant } from "@/colors";
 
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  button: {
-    type: String,
-    default: "info",
-  },
-  buttonLabel: {
-    type: String,
-    default: "Done",
-  },
-  hasCancel: Boolean,
-  modelValue: {
-    type: [String, Number, Boolean],
-    default: null,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    title: string;
+    button?: ButtonColorVariant;
+    buttonLabel?: string;
+    hasCancel?: boolean;
+    modelValue?: string | number | boolean;
+  }>(),
+  {
+    button: "info",
+    buttonLabel: "Done",
+    modelValue: undefined,
+  }
+);
 
-const emit = defineEmits(["update:modelValue", "cancel", "confirm"]);
+const emit = defineEmits<{
+  (e: "update:modelValue", value: typeof props.modelValue): void;
+  (e: "cancel"): void;
+  (e: "confirm"): void;
+}>();
 
 const value = computed({
   get: () => props.modelValue,
   set: (value) => emit("update:modelValue", value),
 });
 
-const confirmCancel = (mode) => {
+const confirmCancel = (mode: "confirm" | "cancel") => {
   value.value = false;
-  emit(mode);
+
+  if (mode === "confirm") {
+    emit("confirm");
+  } else {
+    emit("cancel");
+  }
 };
 
 const confirm = () => confirmCancel("confirm");
 
 const cancel = () => confirmCancel("cancel");
 
-window.addEventListener("keydown", (e) => {
+const closeOnEscape = (e: KeyboardEvent) => {
   if (e.key === "Escape" && value.value) {
     cancel();
   }
+};
+
+onMounted(() => {
+  window.addEventListener("keydown", closeOnEscape);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", closeOnEscape);
 });
 </script>
 

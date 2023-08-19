@@ -1,26 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { computed, useSlots } from "vue";
 
-defineProps({
-  label: {
-    type: String,
-    default: null,
-  },
-  labelFor: {
-    type: String,
-    default: null,
-  },
-  help: {
-    type: String,
-    default: null,
-  },
-});
+defineProps<{
+  label?: string;
+  labelFor?: string;
+  help?: string;
+}>();
 
 const slots = useSlots();
 
 const wrapperClass = computed(() => {
   const base = [];
-  const slotsLength = slots.default().length;
+  const slotsLength = slots.default?.().length ?? 0;
 
   if (slotsLength > 1) {
     base.push("grid grid-cols-1 gap-3");
