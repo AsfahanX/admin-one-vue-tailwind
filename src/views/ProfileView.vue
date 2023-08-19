@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { reactive } from "vue";
 import { useMainStore } from "@/stores/main";
 import {
@@ -23,8 +23,8 @@ import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.
 const mainStore = useMainStore();
 
 const profileForm = reactive({
-  name: mainStore.userName,
-  email: mainStore.userEmail,
+  name: mainStore.userName || "",
+  email: mainStore.userEmail || "",
 });
 
 const passwordForm = reactive({

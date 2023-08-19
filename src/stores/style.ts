@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import * as styles from "@/styles";
 import { darkModeKey, styleKey } from "@/config";
 
-type AvailableStyle = keyof typeof styles;
+export type AvailableStyle = keyof typeof styles;
 
 type State = {
   [P in keyof styles.StyleDef as `${string & P}Style`]: styles.StyleDef[P];

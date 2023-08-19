@@ -36,7 +36,7 @@ export const useMainStore = defineStore("main", {
     history: [],
   }),
   actions: {
-    setUser(payload: UserPayload) {
+    setUser(payload: Partial<UserPayload>) {
       if (payload.name) {
         this.userName = payload.name;
       }

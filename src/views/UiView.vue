@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 import { useStyleStore } from "@/stores/style";
 import {
@@ -34,13 +34,13 @@ const modalTwoActive = ref(false);
 
 const modalThreeActive = ref(false);
 
-const notificationSettingsModel = ref([]);
+const notificationSettingsModel = ref([] as string[]);
 
 const notificationsOutline = computed(
   () => notificationSettingsModel.value.indexOf("outline") > -1
 );
 
-const buttonSettingsModel = ref([]);
+const buttonSettingsModel = ref([] as string[]);
 
 const buttonsOutline = computed(
   () => buttonSettingsModel.value.indexOf("outline") > -1
@@ -69,7 +69,7 @@ const pillsSmall = computed(
 );
 
 const pillsIcon = computed(() =>
-  pillsSettingsModel.value.indexOf("icon") > -1 ? mdiTrendingUp : null
+  pillsSettingsModel.value.indexOf("icon") > -1 ? mdiTrendingUp : undefined
 );
 
 const styleStore = useStyleStore();

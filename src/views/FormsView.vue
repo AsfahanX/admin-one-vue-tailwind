@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from "vue";
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiGithub } from "@mdi/js";
 import SectionMain from "@/components/SectionMain.vue";
@@ -45,7 +45,7 @@ const formStatusWithHeader = ref(true);
 
 const formStatusCurrent = ref(0);
 
-const formStatusOptions = ["info", "success", "danger", "warning"];
+const formStatusOptions = ["info", "success", "danger", "warning"] as const;
 
 const formStatusSubmit = () => {
   formStatusCurrent.value = formStatusOptions[formStatusCurrent.value + 1]

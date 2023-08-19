@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useStyleStore } from "@/stores/style";
 import { gradientBgPurplePink } from "@/colors";
@@ -6,7 +6,9 @@ import SectionMain from "@/components/SectionMain.vue";
 import CardBox from "@/components/CardBox.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
 
-const styles = ["white", "basic"];
+type AvailableStyle = (typeof styles)[number];
+
+const styles = ["white", "basic"] as const;
 
 const styleStore = useStyleStore();
 
@@ -14,7 +16,7 @@ styleStore.setDarkMode(false);
 
 const router = useRouter();
 
-const click = (slug) => {
+const click = (slug: AvailableStyle) => {
   styleStore.setStyle(slug);
   router.push("/dashboard");
 };

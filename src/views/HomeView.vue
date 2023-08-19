@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref, onMounted } from "vue";
 import { useMainStore } from "@/stores/main";
 import {
@@ -23,8 +23,9 @@ import CardBoxClient from "@/components/CardBoxClient.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import SectionBannerStarOnGitHub from "@/components/SectionBannerStarOnGitHub.vue";
+import type { ChartData } from "chart.js";
 
-const chartData = ref(null);
+const chartData = ref<ChartData | null>(null);
 
 const fillChartData = () => {
   chartData.value = chartConfig.sampleChartData();
