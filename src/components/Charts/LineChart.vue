@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, type PropType } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 import {
   Chart,
   LineElement,
