@@ -16,7 +16,7 @@ import type { MenuItem } from "@/types";
 
 export default [
   {
-    route: "dashboard",
+    to: "/dashboard",
     icon: mdiMonitor,
     label: "Dashboard",
   },

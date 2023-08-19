@@ -22,7 +22,6 @@ export type Transaction = {
 export type MenuItem = {
   label?: string;
   to?: string;
-  route?: string;
   href?: string;
   target?: string;
   icon?: string;
