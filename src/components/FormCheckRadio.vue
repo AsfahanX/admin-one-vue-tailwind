@@ -1,4 +1,8 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+  generic="M extends string | number| boolean | ArrayLike<any>"
+>
 import { computed } from "vue";
 
 const props = withDefaults(
@@ -6,13 +10,14 @@ const props = withDefaults(
     name: string;
     type?: "checkbox" | "radio" | "switch";
     label?: string;
-    modelValue?: unknown[] | string | number | boolean;
-    inputValue: string | number | boolean;
+    modelValue?: M;
+    inputValue: M extends ArrayLike<infer T> ? T : M;
   }>(),
   {
     type: "checkbox",
     label: undefined,
     modelValue: undefined,
+    inputValue: undefined,
   }
 );
 

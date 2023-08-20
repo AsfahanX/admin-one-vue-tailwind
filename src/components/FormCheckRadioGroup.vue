@@ -1,18 +1,17 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="M extends string | number">
 import { computed } from "vue";
 import FormCheckRadio from "@/components/FormCheckRadio.vue";
 
 const props = withDefaults(
   defineProps<{
-    options: Record<string, string>;
+    options: Record<M, string>;
     name: string;
     type?: "checkbox" | "radio" | "switch";
     componentClass?: string;
     isColumn?: boolean;
-    modelValue?: unknown[] | string | number | boolean;
+    modelValue?: M | M[];
   }>(),
   {
-    options: () => ({} as Record<string, string>),
     type: "checkbox",
     componentClass: undefined,
     modelValue: undefined,
@@ -42,7 +41,7 @@ const computedValue = computed({
       v-model="computedValue"
       :type="type"
       :name="name"
-      :input-value="key"
+      :input-value="(key as unknown as M)"
       :label="value"
       :class="componentClass"
       class="mr-6 mb-3 last:mr-0"
